@@ -1,17 +1,15 @@
 package baconetworks.npcbattlelimiter;
 
-import baconetworks.npcbattlelimiter.Events.BattleEvent;
 import baconetworks.npcbattlelimiter.config.ConfigLoader;
+import baconetworks.npcbattlelimiter.events.BattleEvent;
 import baconetworks.npcbattlelimiter.task.ResetBattleLimit;
 import com.google.inject.Inject;
 import com.pixelmonmod.pixelmon.Pixelmon;
-import net.minecraftforge.common.MinecraftForge;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.config.ConfigDir;
 import org.spongepowered.api.event.Listener;
-import org.spongepowered.api.event.game.state.GameInitializationEvent;
 import org.spongepowered.api.event.game.state.GamePreInitializationEvent;
 import org.spongepowered.api.event.game.state.GameStartedServerEvent;
 import org.spongepowered.api.plugin.Dependency;

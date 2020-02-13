@@ -1,11 +1,9 @@
-package baconetworks.npcbattlelimiter.Events;
+package baconetworks.npcbattlelimiter.events;
 
 import baconetworks.npcbattlelimiter.config.ConfigLoader;
 import baconetworks.npcbattlelimiter.config.objects.BattleLimitObject;
 import com.pixelmonmod.pixelmon.api.events.BeatTrainerEvent;
-import com.pixelmonmod.pixelmon.comm.ChatHandler;
 import com.pixelmonmod.pixelmon.entities.npcs.NPCTrainer;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.text.Text;
