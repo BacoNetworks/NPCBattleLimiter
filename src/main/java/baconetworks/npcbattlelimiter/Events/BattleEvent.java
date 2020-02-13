@@ -23,7 +23,7 @@ import java.util.concurrent.TimeUnit;
 
 public class BattleEvent {
     @SubscribeEvent
-    public void BattleStartedEvent(BeatTrainerEvent event) throws IllegalAccessException, ClassNotFoundException, NoSuchFieldException {
+    public void BeatTrainerEvent(BeatTrainerEvent event) throws IllegalAccessException, ClassNotFoundException, NoSuchFieldException {
 
         Player player = (Player) event.player;
         NPCTrainer npc = event.trainer;
