@@ -1,12 +1,13 @@
 package baconetworks.npcbattlelimiter;
 
 import baconetworks.npcbattlelimiter.config.ConfigLoader;
-import baconetworks.npcbattlelimiter.events.BattleEvent;
+import baconetworks.npcbattlelimiter.event.TrainerBeatEvent;
 import baconetworks.npcbattlelimiter.task.ResetBattleLimit;
 import com.google.inject.Inject;
 import com.pixelmonmod.pixelmon.Pixelmon;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.spongepowered.api.Game;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.config.ConfigDir;
 import org.spongepowered.api.event.Listener;
@@ -16,10 +17,6 @@ import org.spongepowered.api.plugin.Dependency;
 import org.spongepowered.api.plugin.Plugin;
 
 import java.io.File;
-import java.time.Duration;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.util.concurrent.TimeUnit;
 
 @Plugin(
@@ -36,30 +33,24 @@ import java.util.concurrent.TimeUnit;
         version = "@VERSION@"
 )
 public class NPCBattleLimiter {
-    private File rootDir;
+    long initalDelay = SharedFunctions.Seconds();
 
     @Inject
-    private Logger logger;
+    public Logger logger;
+
 
     //Inject the config dir
     @Inject
     @ConfigDir(sharedRoot = true)
-    private File defaultConfigDir;
+    public File defaultConfigDir;
+
     public static final String PLUGIN_NAME = "NPCBattleLimiter";
     public static final Logger LOGGER = LoggerFactory.getLogger(PLUGIN_NAME);
+    String TimeDelay = SharedFunctions.GetTime();
+
 
     @Listener
     public void onServerStart(GameStartedServerEvent event) {
-        LocalDateTime localNow = LocalDateTime.now();
-        ZonedDateTime zonedNow = ZonedDateTime.of(localNow, ZoneId.systemDefault());
-        ZonedDateTime zonedNext = zonedNow.withHour(12).withMinute(0).withSecond(0);
-
-        if (zonedNow.compareTo(zonedNext) > 0) {
-            zonedNext = zonedNext.plusDays(1);
-        }
-
-        long initalDelay = Duration.between(zonedNow, zonedNext).getSeconds();
-        Pixelmon.EVENT_BUS.register(new BattleEvent());
 
         Sponge.getScheduler()
                 .createTaskBuilder()
@@ -69,14 +60,16 @@ public class NPCBattleLimiter {
                 .async()
                 .submit(this);
 
+        Pixelmon.EVENT_BUS.register(new TrainerBeatEvent());
         logger.info("I started just fine. Running on version " + "@VERSION@" + " of NPCBattleLimiter");
+        logger.info("The NPCBattleLimit will reset in" + TimeDelay);
     }
 
     @Listener
     public void onPreInit(GamePreInitializationEvent event) {
-        rootDir = new File(defaultConfigDir, "NPCBattleLimiter");
+        File rootDir = new File(defaultConfigDir, "NPCBattleLimiter");
         ConfigLoader.init(rootDir);
-        ConfigLoader.loadBattleLimit();
         ConfigLoader.load();
+        ConfigLoader.loadBattleLimit();
     }
 }

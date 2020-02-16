@@ -1,18 +1,16 @@
 package baconetworks.npcbattlelimiter.config.objects;
 
-import java.util.UUID;
-
 public class BattleLimitObject {
-    private UUID PlayerUUID;
+    private String Username;
     private int BattleLimit;
 
-    public BattleLimitObject(String PlayerUUID, int BattleLimit) {
-        this.PlayerUUID = UUID.fromString(PlayerUUID);
+    public BattleLimitObject(String Username, int BattleLimit) {
+        this.Username = Username;
         this.BattleLimit = BattleLimit;
     }
 
-    public UUID GetPlayerUUID() {
-        return this.PlayerUUID;
+    public String GetUsername() {
+        return this.Username;
     }
 
     public int GetLimit() {
@@ -21,6 +19,10 @@ public class BattleLimitObject {
 
     public void SetLimit(int limit) {
         this.BattleLimit = limit;
+    }
+
+    public void SetUsername(String username) {
+        this.Username = username;
     }
 
     public void increaseLimit(int limit) {
